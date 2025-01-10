@@ -1,0 +1,21 @@
+# Minimize environment variables in the action sandbox
+# Selectively add environment variables to the action sandbox with --action_env flag
+common --incompatible_strict_action_env
+
+# Change URL to "<org>.buildbuddy.io" for a more secured build
+common:remote --bes_results_url=https://app.buildbuddy.io/invocation/
+common:remote --bes_backend=grpcs://remote.buildbuddy.io
+common:remote --remote_cache=grpcs://remote.buildbuddy.io
+common:remote --remote_timeout=3600
+common:remote --remote_executor=grpcs://remote.buildbuddy.io
+
+# Reduce download on CI
+common:ci --remote_download_minimal
+
+# Target MacOS platform
+common:mac --extra_execution_platforms=//:macos
+common:mac --platforms=//:macos
+
+# Example user.bazelrc
+# common --remote_header=x-buildbuddy-api-key=aaaabbbbbxxxxcccc
+try-import %workspace%/user.bazelrc
